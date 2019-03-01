@@ -20,7 +20,22 @@ def factorial(x):
         y *= i
     print(y)
 
+def lowest():
+    list = []
+    while (True):
+        x = input("Write a number or leave empty to stop\n")
+        if x == "":
+            break
+        list.append(int(x))
+
+    low = list[0]
+    for i in range(len(list)):
+        if low > list[i]:
+            low = list[i]
+    return low
+
 print("TASK 1\n")
+
 quadratic()
 
 print("-"*20)
@@ -31,3 +46,8 @@ factorial(int(x))
 
 print("-"*20)
 print("TASK 3\n")
+
+print(lowest())
+
+print("-"*20)
+print("TASK 4\n")
