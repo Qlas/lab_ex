@@ -10,6 +10,6 @@
 
 
 def quadratic ():
-    print("a")
+    print("ababa")
 
 quadratic()
