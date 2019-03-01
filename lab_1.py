@@ -10,6 +10,24 @@
 
 
 def quadratic ():
-    print("ababa")
+    for x in range(56,101):
+        y = 2 * x ** 2 + 2 * x + 2
+        print(y)
 
+def factorial(x):
+    y = 1
+    for i in range(1,x+1):
+        y *= i
+    print(y)
+
+print("TASK 1\n")
 quadratic()
+
+print("-"*20)
+print("TASK 2\n")
+
+x = input("Write a number\n")
+factorial(int(x))
+
+print("-"*20)
+print("TASK 3\n")
