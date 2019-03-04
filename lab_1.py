@@ -8,6 +8,9 @@
 #5 upload the solution as a Github repository. I suggest creating a directory for the whole python course and subdirectories lab1, lab2 etc. (0.5p)
 #Ad 5 Hint write in Google "how to create a github repo". There are plenty of tutorials explaining this matter.
 
+from numpy import *
+from numpy.random import *
+from matplotlib.pyplot import *
 
 def quadratic ():
     for x in range(56,101):
@@ -51,3 +54,16 @@ print(lowest())
 
 print("-"*20)
 print("TASK 4\n")
+
+lenght = int(input("Lenght: "))
+
+num_points = lenght
+x_values = zeros(num_points)
+y_values = zeros(num_points)
+for i in range(lenght):
+    x_values[i] = i
+    y_values[i] = sin(x_values[i]) / x_values[i]
+
+point_numbers = range(num_points)
+plot(x_values, y_values)
+show()
