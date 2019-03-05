@@ -35,6 +35,7 @@ def lowest():
     for i in range(len(list)):
         if low > list[i]:
             low = list[i]
+    print("Index: ", list.index(low))
     return low
 
 print("TASK 1\n")
@@ -61,7 +62,7 @@ num_points = lenght
 x_values = zeros(num_points)
 y_values = zeros(num_points)
 for i in range(lenght):
-    x_values[i] = i
+    x_values[i] = i+1
     y_values[i] = sin(x_values[i]) / x_values[i]
 
 point_numbers = range(num_points)
