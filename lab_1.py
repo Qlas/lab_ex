@@ -21,7 +21,7 @@ def factorial(x):
     y = 1
     for i in range(1,x+1):
         y *= i
-    print(y)
+    print("Factorial: ", y)
 
 def lowest():
     list = []
@@ -30,12 +30,14 @@ def lowest():
         if x == "":
             break
         list.append(int(x))
-
     low = list[0]
     for i in range(len(list)):
         if low > list[i]:
             low = list[i]
-    print("Index: ", list.index(low))
+    print("Index: ")
+    for i in range(len(list)):
+        if list[i] == low:
+            print(i)
     return low
 
 print("TASK 1\n")
@@ -44,14 +46,13 @@ quadratic()
 
 print("-"*20)
 print("TASK 2\n")
-
 x = input("Write a number\n")
 factorial(int(x))
 
 print("-"*20)
 print("TASK 3\n")
 
-print(lowest())
+print("Number:", lowest())
 
 print("-"*20)
 print("TASK 4\n")
@@ -59,11 +60,11 @@ print("TASK 4\n")
 lenght = int(input("Lenght: "))
 
 num_points = lenght
-x_values = zeros(num_points)
-y_values = zeros(num_points)
-for i in range(lenght):
-    x_values[i] = i+1
-    y_values[i] = sin(x_values[i]) / x_values[i]
+x_values = []
+y_values = []
+for i in range(abs(lenght)):
+    x_values.append(i)
+    y_values.append(sin(x_values[i]) * x_values[i])
 
 point_numbers = range(num_points)
 plot(x_values, y_values)
