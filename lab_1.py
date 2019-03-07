@@ -15,7 +15,7 @@ from matplotlib.pyplot import *
 def quadratic ():
     for x in range(56,101):
         y = 2 * x ** 2 + 2 * x + 2
-        print(y)
+        print(x, ": ", y)
 
 def factorial(x):
     y = 1
@@ -27,9 +27,12 @@ def lowest():
     list = []
     while (True):
         x = input("Write a number or leave empty to stop\n")
-        if x == "":
+        if x == "" and len(list) != 0:
             break
-        list.append(int(x))
+        try:
+         list.append(int(x))
+        except ValueError:
+            continue
     low = list[0]
     for i in range(len(list)):
         if low > list[i]:
@@ -48,11 +51,13 @@ print("-"*20)
 print("TASK 2\n")
 while True:
     try:
-        x = int(input("Write a number\n"))
-        break
+        x = int(input("Write a number >=0\n"))
+        if x >= 0:
+            break
     except ValueError:
         continue
-factorial(int(x))
+
+factorial(x)
 
 print("-"*20)
 print("TASK 3\n")
