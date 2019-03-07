@@ -9,7 +9,6 @@
 #Ad 5 Hint write in Google "how to create a github repo". There are plenty of tutorials explaining this matter.
 
 from numpy import *
-from numpy.random import *
 from matplotlib.pyplot import *
 
 def quadratic ():
@@ -32,6 +31,7 @@ def lowest():
         try:
          list.append(int(x))
         except ValueError:
+            print("Value Error. Write a number")
             continue
     low = list[0]
     for i in range(len(list)):
@@ -49,12 +49,16 @@ quadratic()
 
 print("-"*20)
 print("TASK 2\n")
+
 while True:
     try:
         x = int(input("Write a number >=0\n"))
         if x >= 0:
             break
+        else:
+            print("Number should be greater than 0")
     except ValueError:
+        print("Value error, write a number")
         continue
 
 factorial(x)
@@ -72,13 +76,14 @@ while True:
         lenght = int(input("Lenght: "))
         break
     except ValueError:
+        print("Value Error, write a number")
         continue
 
 num_points = lenght
 x_values = []
 y_values = []
-for i in range(abs(lenght)):
-    x_values.append(i)
+for i in range(abs(lenght)*10):
+    x_values.append(i/10-20)
     y_values.append(sin(x_values[i]) * x_values[i])
 
 point_numbers = range(num_points)
