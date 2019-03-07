@@ -46,7 +46,12 @@ quadratic()
 
 print("-"*20)
 print("TASK 2\n")
-x = input("Write a number\n")
+while True:
+    try:
+        x = int(input("Write a number\n"))
+        break
+    except ValueError:
+        continue
 factorial(int(x))
 
 print("-"*20)
@@ -57,7 +62,12 @@ print("Number:", lowest())
 print("-"*20)
 print("TASK 4\n")
 
-lenght = int(input("Lenght: "))
+while True:
+    try:
+        lenght = int(input("Lenght: "))
+        break
+    except ValueError:
+        continue
 
 num_points = lenght
 x_values = []
