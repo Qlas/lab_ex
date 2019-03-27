@@ -11,10 +11,13 @@
 # In case of task 4  do not forget to round to different amount of decimals and see if it still works.(3p)
 
 from cs50 import get_int
+from numpy import *
+from matplotlib.pyplot import *
+from mpl_toolkits.mplot3d import Axes3D
 
 print("TASK 1\n")
 
-x = input("norm")
+x = input("normal")
 y = get_int("get")
 
 print(x, type(x))
@@ -22,3 +25,27 @@ print(y, type(y))
 
 print("-"*20)
 print("TASK 2\n")
+
+X = abs(get_int("Radius of first circe"))
+Y = abs(get_int("Radius of second circe"))
+print("First circe:\n", "Perimeter: ", round(2 * pi * X,2), "\nField: ", round(pi * X**2,2))
+print("Second circe:\n", "Perimeter: ", round(2 * pi * Y,2), "\nField: ", round(pi * Y**2,2))
+
+print("-"*20)
+print("TASK 3\n")
+
+print("X is divisible by Y") if (X%Y == 0) else print("X is not divisible by Y")
+
+print("-"*20)
+print("TASK 5\n")
+
+
+x = get_int("Give us a number")
+x_knots = linspace(-3*pi,3*pi,201)
+y_knots = linspace(-3*pi,3*pi,201)
+X, Y = meshgrid(x_knots, y_knots*x)
+R = sqrt(X**2+Y**2)
+Z = cos(R)**2*np.exp(-0.1*R)
+ax = Axes3D(figure(figsize=(8,5)))
+ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0.4)
+show()
