@@ -10,7 +10,7 @@
 #6 Test your code. Check various edge cases. In other words: does your program (1, 3, 4 & 5)work for all input values?
 # In case of task 4  do not forget to round to different amount of decimals and see if it still works.(3p)
 
-from cs50 import get_int
+from cs50 import get_int, get_float
 from numpy import *
 from matplotlib.pyplot import *
 from mpl_toolkits.mplot3d import Axes3D
@@ -26,8 +26,8 @@ print(y, type(y))
 print("-"*20)
 print("TASK 2\n")
 
-X = abs(get_int("Radius of first circe"))
-Y = abs(get_int("Radius of second circe"))
+X = abs(get_float("Radius of first circe"))
+Y = abs(get_float("Radius of second circe"))
 print("First circe:\n", "Perimeter: ", round(2 * pi * X,2), "\nField: ", round(pi * X**2,2))
 print("Second circe:\n", "Perimeter: ", round(2 * pi * Y,2), "\nField: ", round(pi * Y**2,2))
 
