@@ -11,6 +11,19 @@ from cs50 import get_float
 from numpy import pi
 
 
+def countField():
+    figur = ""
+    x = 0
+    y = 0
+    while figur != 'circle' and figur != 'rectangle' and figur != 'triangle' and figur != 'rhombus':
+        figur = str(input("Write: circle/rectangle/triangle/rhombus\n"))
+        if figur != 'circle' and figur != 'rectangle' and figur != 'triangle' and figur != 'rhombus':
+            print("You must write exacle this figure")
+    x = get_float("Podaj pierwszy argument ")
+    y = get_float("Podaj drugi argument ")
+    figure([[figur, x, y]])
+
+
 def field(tab):
     name = tab[0].lower()
     try:
@@ -21,10 +34,15 @@ def field(tab):
         y = tab[2]
     except:
         y = 0
-    formula = {"a": 5, "circle": round(2 * pi * x,2), "rectangle": round(x*y,2), "triangle": round(1/2 * x *y,2), "rhombus": round(1/2*x*y,2)}
     try:
-        return formula[name]
-    except KeyError:
+        formula = {"circle": round(2 * pi * x,2), "rectangle": round(x*y,2), "triangle": round(1/2 * x *y,2), "rhombus": round(1/2*x*y,2)}
+        try:
+            return formula[name]
+        except KeyError:
+            print("Zła nazwa figury")
+            return -1
+    except TypeError:
+        print("Musisz podac liczby jako x i y")
         return -1
 
 def figure(Tab):
@@ -35,7 +53,6 @@ def figure(Tab):
             print("Za mało argumentów w", tab[0])
             return
         elif y == -1:
-            print("Zła nazwa figury")
             return
         else:
             if y > 0:
@@ -55,16 +72,9 @@ def figure(Tab):
     else:
         print(x[0])
 
-figur = ""
-x = 0
-y = 0
-while figur != 'circle' and figur != 'rectangle' and figur != 'triangle' and figur != 'rhombus':
-    figur = str(input("Write: circle/rectangle/triangle/rhombus\n"))
-    if figur != 'circle' and figur != 'rectangle' and figur != 'triangle' and figur != 'rhombus':
-        print("You must write exacle this figure")
-x = get_float("Podaj pierwszy argument ")
-y = get_float("Podaj drugi argument ")
-figure([[figur,x,y]])
+
+#countField()
+
 
 x = 5
 y = 5
