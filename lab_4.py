@@ -22,16 +22,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 from cs50 import get_float
 from scipy.integrate import odeint
+from mpl_toolkits.mplot3d import Axes3D
+from scipy import linspace, cos, exp, random, meshgrid, zeros, sin, sqrt
+from scipy.optimize import fmin
+from matplotlib.pyplot import plot, show, legend, figure, cm, contour, clabel
+from scipy.optimize import basinhopping
 
 #task 1,2
-def Euler():
+def task1_2():
     a = get_float('a: ')
     T = get_float('T: ')
     while T <= 0:
-        T= get_float('T > 0: ')
+        T = get_float('T > 0: ')
     h = get_float('h: ')
     while h <= 0:
         h = get_float('h > 0: ')
+    t, x = Euler(a, T, h)
+    t_opt, x_opt = Euler(a, T, 0.001)
+    plt.plot(t_opt, x_opt, '-', color='green')
+    plt.plot(t,x,'o')
+    plt.legend(["Ideal"])
+    plt.show()
+
+def Euler(a, T, h):
     initial_x = 1
     t = np.arange(0,T,h)
     x = np.zeros(t.shape)
@@ -39,18 +52,7 @@ def Euler():
 
     for i in range(t.size-1):
         x[i+1] = x[i] + h * (1 * x[i])
-    t_opt = np.arange(0,T,h/100)
-    x_opt = np.zeros(t_opt.shape)
-    x_opt[0] = initial_x
-
-    for i in range(t_opt.size-1):
-        x_opt[i+1] = x_opt[i] + h/100 * (1 * x_opt[i])
-
-    plt.plot(t_opt, x_opt, '-', color='green')
-    plt.plot(t,x,'o')
-    plt.legend(["Ideal"])
-    plt.show()
-
+    return t, x
 #task 3
 def F(x, t):
     dx = [0, 0, 0]
@@ -78,45 +80,85 @@ def task_3():
     plt.axis('equal')
     plt.show()
 
+def task_4():
+    def f(x):
+        return exp(-x[0] ** 2 - x[1] ** 2)
+
+    def neg_f(x):
+        return -f(x)
+
+    x0 = (0, -2)
+    x_min = fmin(neg_f, x0)
+
+    delta = 3
+    x_knots = linspace(x_min[0] - delta, x_min[0] + delta, 41)
+    y_knots = linspace(x_min[1] - delta, x_min[1] + delta, 41)
+    X, Y = meshgrid(x_knots, y_knots)
+    Z = zeros(X.shape)
+    for i in range(Z.shape[0]):
+        for j in range(Z.shape[1]):
+            Z[i][j] = f([X[i, j], Y[i, j]])
+
+    ax = Axes3D(figure(figsize=(8, 5)))
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0.4)
+    ax.plot([x0[0]], [x0[1]], [f(x0)], color='g', marker='o', markersize=5, label='initial')
+    ax.plot([x_min[0]], [x_min[1]], [f(x_min)], color='k', marker='o', markersize=5, label='final')
+    ax.legend()
+    show()
+
+def task_5():
+    def f(x):
+        #return exp(cos(x[0] ** 2) ** 2 - sin(x[1]) ** 2)
+        return -(sin(x[0])**2+cos(x[1])**2)/(5+x[0]**2+x[1]**2)
+
+    def neg_f(x):
+        return -f(x)
+
+    x0 = (1, 1)
+    x_min = fmin(neg_f, x0)
+    print(x_min)
+
+    delta = 4
+    x_knots = linspace(x_min[0] - delta, x_min[0] + delta, 41)
+    y_knots = linspace(x_min[1] - delta, x_min[1] + delta, 41)
+    X, Y = meshgrid(x_knots, y_knots)
+    Z = zeros(X.shape)
+    for i in range(Z.shape[0]):
+        for j in range(Z.shape[1]):
+            Z[i][j] = f([X[i, j], Y[i, j]])
+
+    tab_max = x0
+    value_max = f(x_min)
+    for i in range(100):
+        xa = [random.uniform(-3,3), random.uniform(-3,3)]
+        print("a", xa)
+        s = fmin(f, xa)
+        print("s", s)
+        z = f(s)
+        if z < value_max:
+            tab_max = s
+            value_max = z
+
+    print(tab_max)
+    print(value_max)
+    ax = Axes3D(figure(figsize=(8, 5)))
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0.4)
+    ax.plot([x0[0]], [x0[1]], [f(x0)], color='g', marker='o', markersize=5, label='initial')
+    ax.plot([x_min[0]], [x_min[1]], [f(x_min)], color='b', marker='o', markersize=5, label='final')
+    ax.plot([tab_max[0]], [tab_max[1]], [f(tab_max)], color='r', marker='o', markersize=10, label='best')
+    ax.legend()
+    show()
+
 # TASK 1,2
-#Euler()
+#task1_2()
 
 # task 3
 #task_3()
 
 #task 4
-
-from scipy import linspace , cos , exp, random, meshgrid, zeros
-from scipy.optimize import fmin
-from matplotlib.pyplot import plot, show, legend, figure, cm, contour, clabel
-def f(x):
-    return exp(-x[0] ** 2 - x[1] ** 2)
-
-
-def neg_f(x):
-    return -f(x)
-
-x0 = (0,-2)
-x_min = fmin(neg_f, x0)
-
-from mpl_toolkits.mplot3d import Axes3D
-
-delta = 3
-x_knots = linspace(x_min[0] - delta, x_min[0] + delta, 41)
-y_knots = linspace(x_min[1] - delta, x_min[1] + delta, 41)
-X, Y = meshgrid(x_knots, y_knots)
-Z = zeros(X.shape)
-for i in range(Z.shape[0]):
-    for j in range(Z.shape[1]):
-        Z[i][j] = f([X[i, j], Y[i, j]])
-
-ax = Axes3D(figure(figsize=(8, 5)))
-ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0.4)
-ax.plot([x0[0]], [x0[1]], [f(x0)], color='g', marker='o', markersize=5, label='initial')
-ax.plot([x_min[0]], [x_min[1]], [f(x_min)], color='k', marker='o', markersize=5, label='final')
-ax.legend()
-show()
+#task_4()
 
 #task 5
+task_5()
 
 
