@@ -36,9 +36,10 @@ print("Currently the %s exchange market is better for buying whilst %s is better
 
 # 2 task
 Data = []
+print("\nretrieving data from randomuser\n")
 while len(Data) != 100:
     try:
-        data = requests.get("https://randomuser.me/api/?results=10&inc=login,name").json()
+        data = requests.get("https://randomuser.me/api/?results=10&inc=login,name, id").json()
         for i in data['results']:
             Data.append(i)
     except:
@@ -46,13 +47,13 @@ while len(Data) != 100:
 
 Users = {}
 for i in range(100):
-    Users[i] = {'username': Data[i]['login']['username'], 'name' : {'first': Data[i]['name']['first'], 'second' : Data[i]['name']['last']},
+    Users[i] = {'username': Data[i]['login']['username'], 'name' : {'first': Data[i]['name']['first'], 'second' : Data[i]['name']['last']}, 'id': Data[i]['id'],
                 'pocket': {"BTC" : round(random.random()*2,8), "PLN": round(random.random()*30000,2)}}
-
-
+print("Done")
 for i in range(100):
     sleep(0.5)
     transaction = [random.randint(0, 99), random.randint(0, 99)]
+    while transaction[0] == transaction[1]: transaction = [random.randint(0, 99), random.randint(0, 99)]
     bid, _ = bitbay()
     User1 = Users[transaction[0]]['pocket']
     User2 = Users[transaction[1]]['pocket']
@@ -62,12 +63,12 @@ for i in range(100):
         btc = round(random.random(),8)
         pln = round(btc * bid,2)
     print("\nTransaction %s\n%s to %s sold %s BTC for %s PLN" %(i, Users[transaction[0]]['username'], Users[transaction[1]]['username'], btc, pln))
-    # Users[transaction[0]]['pocket']['BTC'] -= btc
-    # Users[transaction[1]]['pocket']['BTC'] += btc
-    # Users[transaction[0]]['pocket']['PLN'] += pln
-    # Users[transaction[1]]['pocket']['PLN'] -= pln
+    Users[transaction[0]]['pocket']['BTC'] -= btc
+    Users[transaction[1]]['pocket']['BTC'] += btc
+    Users[transaction[0]]['pocket']['PLN'] += pln
+    Users[transaction[1]]['pocket']['PLN'] -= pln
 
 for i in range(100):
-    print("Username: %s\n BTC: %s\n PLN: %s" %(Users[i]['username'],Users[i]['pocket']['BTC'], Users[i]['pocket']['PLN']))
+    print("Username: %s\n BTC: %s\n PLN: %s" %(Users[i]['username'],round(Users[i]['pocket']['BTC'],8), round(Users[i]['pocket']['PLN'],2)))
 
 
