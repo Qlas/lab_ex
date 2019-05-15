@@ -51,9 +51,9 @@ for i in range(100):
 
 
 for i in range(100):
-    #sleep(0.5)
+    sleep(0.5)
     transaction = [random.randint(0, 99), random.randint(0, 99)]
-    bid, ask = bitbay()
+    bid, _ = bitbay()
     User1 = Users[transaction[0]]['pocket']
     User2 = Users[transaction[1]]['pocket']
     btc = round(random.random(),8)
