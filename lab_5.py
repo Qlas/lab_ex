@@ -50,20 +50,32 @@ for i in range(100):
     Users[i] = {'username': Data[i]['login']['username'], 'name' : {'first': Data[i]['name']['first'], 'second' : Data[i]['name']['last']}, 'id': Data[i]['id'],
                 'pocket': {"BTC" : round(random.random()*2,8), "PLN": round(random.random()*30000,2)}}
 print("Done")
+ask = 0
 bid = 0
 for i in range(100):
     sleep(0.5)
+    way = random.randint(0,1)
     transaction = [random.randint(0, 99), random.randint(0, 99)]
     while transaction[0] == transaction[1]: transaction = [random.randint(0, 99), random.randint(0, 99)]
-    if i % 10 == 0: bid, _ = bitbay()
+    if i % 10 == 0: bid, ask = bitbay()
     User1 = Users[transaction[0]]['pocket']
     User2 = Users[transaction[1]]['pocket']
-    btc = round(random.random(),8)
-    pln = round(btc * bid,2)
-    while btc > User1['BTC'] or pln > User2['PLN']:
-        btc = round(random.random(),8)
-        pln = round(btc * bid,2)
-    print("\nTransaction %s\n%s to %s sold %s BTC for %s PLN" %(i, Users[transaction[0]]['username'], Users[transaction[1]]['username'], btc, pln))
+    btc = round(random.random(), 8)
+    if way == 0:
+        pln = round(btc * ask,2)
+        while btc > User1['BTC'] or pln > User2['PLN']:
+            btc = round(random.random(),8)
+            pln = round(btc * ask,2)
+        print("\nTransaction %s\n%s to %s sold %s BTC for %s PLN" %(i, Users[transaction[0]]['username'], Users[transaction[1]]['username'], btc, pln))
+    else:
+        pln = round(btc * bid, 2)
+        while pln > User1['PLN'] or btc > User2['BTC']:
+            btc = round(random.random(),8)
+            pln = round(btc * bid,2)
+        print("\nTransaction %s\n%s to %s buy %s BTC for %s PLN" % (
+        i, Users[transaction[0]]['username'], Users[transaction[1]]['username'], btc, pln))
+        btc = -btc
+        pln = -pln
     Users[transaction[0]]['pocket']['BTC'] -= btc
     Users[transaction[1]]['pocket']['BTC'] += btc
     Users[transaction[0]]['pocket']['PLN'] += pln
